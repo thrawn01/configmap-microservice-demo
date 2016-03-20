@@ -34,6 +34,7 @@ func main() {
 	confManager := NewMutexConfigManager(loadConfig(CONFIG_FILE))
 	//confManager := NewChannelConfigManager(loadConfig(CONFIG_FILE))
 
+	// Create a single GET Handler to print out our simple config message
 	router := httprouter.New()
 	router.GET("/", func(resp http.ResponseWriter, req *http.Request, params httprouter.Params) {
 		conf := confManager.Get()

@@ -20,7 +20,7 @@ type ConfigManager interface {
 
 /*
  This struct manages the configuration instance by
- preforming locking around access to the config struct.
+ preforming locking around access to the Config struct.
 */
 type MutexConfigManager struct {
 	conf  *Config
@@ -49,6 +49,10 @@ func (self *MutexConfigManager) Close() {
 	//Do Nothing
 }
 
+/*
+ This struct manages the configuration instance by feeding a
+ pointer through a channel whenever the user calls Get()
+*/
 type ChannelConfigManager struct {
 	conf *Config
 	get  chan *Config
