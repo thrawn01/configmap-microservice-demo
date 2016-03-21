@@ -3,6 +3,8 @@ package main
 import (
 	"time"
 
+	"fmt"
+
 	"gopkg.in/fsnotify.v1"
 )
 
@@ -50,6 +52,27 @@ func (self *FileWatcher) run() {
 	for {
 		select {
 		case event := <-self.fsNotify.Events:
+			fmt.Printf("Event - Name: %s Type: %d - repr: %s\n", event.Name, event.Op, event.String())
+			// When a ConfigMap update occurs kubernetes AtomicWriter() creates a new directory;
+			// writing the updated ConfigMap contents to the new directory. Once the write is
+			// complete it removes the original file symlink and replaces it with a new symlink
+			// pointing to the contents of the newly created directory. It does this to achieve
+			// atomic ConfigMap updates. But it also means the file we were monitoring for write
+			// events never got them and was instead deleted.
+
+			// The correct way to handle this would be to monitor the symlink instead of the
+			// actual file for events. However fsnotify.v1 does not allow us to pass in the
+			// IN_DONT_FOLLOW flag to inotify which would allow us to monitor the
+			// symlink for changes instead of the de-referenced file
+
+			if event.Op == fsnotify.Remove {
+				// Since the symlink was removed, we must re-register
+				// the file to be watched
+				self.fsNotify.Remove(event.Name)
+				self.fsNotify.Add(event.Name)
+				lastWriteEvent = &event
+			}
+
 			// If it was a write event
 			if event.Op == fsnotify.Write {
 				lastWriteEvent = &event

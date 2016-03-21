@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-microservice-demo
+  namespace: default
+data:
+  configmap-microservice-demo.yaml: |
+    message: Hello Grandma
