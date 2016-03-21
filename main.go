@@ -11,8 +11,8 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-const CONFIG_FILE = "config.yaml"
-const BIND = "localhost:8082"
+const CONFIG_FILE = "/etc/config/configmap-microservice-demo.yaml"
+const BIND = "0.0.0.0:8080"
 
 func check(err error) {
 	if err != nil {

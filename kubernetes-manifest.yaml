@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: configmap-microservice-demo
+spec:
+  template:
+    metadata:
+      labels:
+        app: configmap-microservice-demo
+    spec:
+      containers:
+        - name: configmap-microservice-demo
+          image: docker.io/thrawn01/configmap-microservice-demo
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+          - name: config-volume
+            mountPath: /etc/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: configmap-microservice-demo
