@@ -20,6 +20,16 @@ func check(err error) {
 	}
 }
 
+/*
+ This is the struct that holds our application's configuration
+*/
+type Config struct {
+	Message string `yaml:"message"`
+}
+
+/*
+ Simple Yaml Config file loader
+*/
 func loadConfig(configFile string) *Config {
 	conf := &Config{}
 	configData, err := ioutil.ReadFile(configFile)

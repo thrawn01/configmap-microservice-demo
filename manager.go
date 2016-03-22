@@ -3,13 +3,6 @@ package main
 import "sync"
 
 /*
- This is the struct that holds our application's configuration
-*/
-type Config struct {
-	Message string `yaml:"message"`
-}
-
-/*
  Simple interface that allows us to switch out both implementations of the Manager
 */
 type ConfigManager interface {

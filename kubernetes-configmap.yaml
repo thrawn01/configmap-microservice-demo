@@ -5,4 +5,4 @@ metadata:
   namespace: default
 data:
   configmap-microservice-demo.yaml: |
-    message: Hello Grandma
+    message: Hello World
