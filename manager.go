@@ -32,10 +32,9 @@ func (self *MutexConfigManager) Set(conf *Config) {
 
 func (self *MutexConfigManager) Get() *Config {
 	self.mutex.Lock()
-	defer func() {
-		self.mutex.Unlock()
-	}()
-	return self.conf
+	temp := self.conf
+	self.mutex.Unlock()
+	return temp
 }
 
 func (self *MutexConfigManager) Close() {

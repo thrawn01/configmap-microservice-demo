@@ -60,8 +60,8 @@ func (self *FileWatcher) run() {
 			// The correct way to handle this would be to monitor the symlink instead of the
 			// actual file for events. However fsnotify.v1 does not allow us to pass in the
 			// IN_DONT_FOLLOW flag to inotify which would allow us to monitor the
-			// symlink for changes instead of the de-referenced file. This is likely to change
-			// as fsnotify is designed as cross platform and not all platforms support
+			// symlink for changes instead of the de-referenced file. This is not likely to
+			// change as fsnotify is designed as cross platform and not all platforms support
 			// symlinks.
 
 			if event.Op == fsnotify.Remove {
